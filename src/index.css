@@ -44,14 +44,24 @@ All colors MUST be HSL.
     --romantic-secondary: 340 65% 45%;
     --romantic-light: 340 100% 85%;
     --romantic-pale: 340 100% 95%;
+    --romantic-accent: 320 70% 60%;
+    --romantic-glow: 340 100% 70%;
     
-    /* Gradients */
+    /* Modern gradients */
     --gradient-romantic: linear-gradient(135deg, hsl(340 82% 52%), hsl(340 100% 85%));
-    --gradient-background: radial-gradient(circle at top, hsl(340 100% 97%), hsl(340 80% 92%));
+    --gradient-background: conic-gradient(from 45deg, hsl(340 100% 97%), hsl(320 80% 95%), hsl(340 100% 97%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+    --gradient-button: linear-gradient(135deg, hsl(340 82% 52%), hsl(320 75% 55%), hsl(340 90% 65%));
     
-    /* Shadows */
-    --shadow-romantic: 0 20px 50px rgba(233, 30, 99, 0.15);
-    --shadow-heart: 0 10px 25px rgba(233, 30, 99, 0.2);
+    /* Modern shadows */
+    --shadow-romantic: 0 25px 60px rgba(233, 30, 99, 0.15);
+    --shadow-heart: 0 15px 35px rgba(233, 30, 99, 0.25);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 30px rgba(233, 30, 99, 0.3);
+    
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
 
     --sidebar-background: 0 0% 98%;
 
@@ -125,16 +135,17 @@ All colors MUST be HSL.
 @layer components {
   .heart {
     @apply absolute w-5 h-5 opacity-70;
-    background-color: hsl(var(--romantic-primary));
+    background: var(--gradient-romantic);
     transform: rotate(-45deg);
     animation: fall 6s linear infinite;
+    filter: drop-shadow(0 0 8px rgba(233, 30, 99, 0.4));
   }
   
   .heart:before,
   .heart:after {
     content: "";
     @apply absolute w-5 h-5 rounded-full;
-    background-color: hsl(var(--romantic-primary));
+    background: hsl(var(--romantic-glow));
   }
   
   .heart:before {
@@ -147,20 +158,126 @@ All colors MUST be HSL.
     top: 0;
   }
   
-  .romantic-container {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: var(--shadow-romantic);
-    backdrop-filter: blur(10px);
+  /* Modern glassmorphism container */
+  .glass-container {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-glass), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
   }
   
-  .gallery-image {
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  .glass-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 3s infinite;
+  }
+  
+  /* Interactive gallery image with modern effects */
+  .modern-gallery-image {
+    @apply relative overflow-hidden rounded-3xl;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: var(--shadow-heart);
   }
   
-  .gallery-image:hover {
-    transform: scale(1.08) rotate(1deg);
-    box-shadow: 0 15px 35px rgba(233, 30, 99, 0.3);
+  .modern-gallery-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  
+  .modern-gallery-image:hover::before {
+    opacity: 1;
+  }
+  
+  .modern-gallery-image:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-glow), 0 25px 50px rgba(233, 30, 99, 0.2);
+  }
+  
+  /* Modern button with enhanced effects */
+  .modern-button {
+    @apply relative overflow-hidden font-semibold tracking-wide;
+    background: var(--gradient-button);
+    box-shadow: var(--shadow-romantic);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .modern-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .modern-button:hover::before {
+    left: 100%;
+  }
+  
+  .modern-button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--shadow-glow), 0 15px 40px rgba(233, 30, 99, 0.3);
+  }
+  
+  /* Typography enhancements */
+  .display-text {
+    font-family: var(--font-display);
+    background: var(--gradient-romantic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 8px rgba(233, 30, 99, 0.3);
+    line-height: 1.1;
+  }
+  
+  /* Floating elements */
+  .floating {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  /* Modern card stacking effect */
+  .card-stack {
+    position: relative;
+  }
+  
+  .card-stack::before,
+  .card-stack::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: -4px;
+    bottom: -4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: inherit;
+    z-index: -1;
+    backdrop-filter: blur(5px);
+  }
+  
+  .card-stack::after {
+    top: 8px;
+    left: 8px;
+    right: -8px;
+    bottom: -8px;
+    opacity: 0.5;
   }
 }
 
@@ -212,5 +329,43 @@ All colors MUST be HSL.
   to { 
     opacity: 1; 
     transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
   }
 }
