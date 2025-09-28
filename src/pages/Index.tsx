@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import confetti from "canvas-confetti";
-import romantic1 from "@/assets/romantic-1.jpg";
-import romantic2 from "@/assets/romantic-2.jpg";
-import romantic3 from "@/assets/romantic-3.jpg";
+import photo1 from "@/assets/photo1.jpg";
+import photo2 from "@/assets/photo2.jpg";
+import photo3 from "@/assets/photo3.jpg";
 
 const Index = () => {
   const [showMessage, setShowMessage] = useState(false);
@@ -116,9 +116,9 @@ const Index = () => {
         {/* Enhanced Photo Gallery with Modern Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {[
-            { src: romantic1, alt: "Romantic sunset silhouette", delay: "0ms" },
-            { src: romantic2, alt: "Cherry blossom dreams", delay: "200ms" },
-            { src: romantic3, alt: "Elegant romantic roses", delay: "400ms" }
+            { src: photo1, alt: "I", delay: "0ms" },
+            { src: photo2, alt: "Love", delay: "200ms" },
+            { src: photo3, alt: "You", delay: "400ms" }
           ].map((image, index) => (
             <div 
               key={index}
